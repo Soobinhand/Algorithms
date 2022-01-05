@@ -30,6 +30,9 @@ import java.util.Iterator;
  *   배열이 1/4 이하로 채워져 있는지 검사하는 것이 바람직하다.
  *   1/4 기준으로 검사하여 배열 크기를 절반으로 줄이면 크기 조정 후 스택의 상태가 절반은 비어있고 절반은 차 있는 상황이 된다.
  *
+ * peek()
+ * - 스택 제일 위에 있는 항목을 반환한다. 제거는 하지 않는다.
+ *
  * iterator()
  * - 반복자를 구현하는 메서드이다.
  *   컬렉션 Iterator 는 객체를 리턴하는 iterator() 메서드를 구현해야 한다.
@@ -70,6 +73,11 @@ public class Stack<Item> implements Iterable<Item> {
         stack[N] = null;
         if (N > 0 && N == stack.length / 4) resize(stack.length / 2);
         return item;
+    }
+
+    public Item peek(){
+        if (isEmpty()) throw new IllegalArgumentException("스택이 비었음");
+        return stack[N-1];
     }
 
     public Iterator<Item> iterator(){
