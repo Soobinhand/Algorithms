@@ -19,22 +19,25 @@ import java.util.ArrayList;
  *   연결되었다는 것은 해당 인접 리스트 번호에 숫자가 들어갔다는 것이다.
  *   0번째 원소에 [1,2,3,4] 이런식으로 들어가면 0이 1,2,3,4와 연결되었다는 것이다.
  *
- * Iterable<Integer> adj ( int v )
+ * Iterable<Integer> connectedWith ( int v )
  * - v와 연결된 것을 꺼내온다.
  *   즉 v번째 리스트를 꺼낸다.
+ *
+ * ArrayList<ArrayList<Integer>> getArr ( )
+ * - 전체 그래프를 출력한다.
  */
 
 public class Graph {
 
     private final int V; // 정점 갯수
     private int E; // 간선 갯수
-    private ArrayList<ArrayList<Integer>> adj; // 인접 리스트
+    private ArrayList<ArrayList<Integer>> arr; // 인접 리스트
 
     public Graph(int V){
         this.V = V;
-        adj = new ArrayList<>(V); // 리스트 생성
+        arr = new ArrayList<>(V); // 리스트 생성
         for (int i=0;i<V;i++){
-            adj.add(new ArrayList<>()); // 모든 리스트를 공백으로 초기화
+            arr.add(new ArrayList<>()); // 모든 리스트를 공백으로 초기화
         }
     }
 
@@ -47,13 +50,17 @@ public class Graph {
     }
 
     public void addEdge(int v, int w){
-        adj.get(v).add(w); // w를 v의 리스트에 추가
-        adj.get(w).add(v); // v를 w의 리스트에 추가한다.
+        arr.get(v).add(w); // w를 v의 리스트에 추가
+        arr.get(w).add(v); // v를 w의 리스트에 추가한다.
         E++;
     }
 
-    public Iterable<Integer> adj(int v){
-        return adj.get(v);
+    public Iterable<Integer> connectedWith(int v){
+        return arr.get(v);
+    }
+
+    public ArrayList<ArrayList<Integer>> getArr(){
+        return arr;
     }
 
     // 테스트
@@ -64,6 +71,6 @@ public class Graph {
         graph.addEdge(0,3);
         graph.addEdge(0,4);
         graph.addEdge(2,1);
-        System.out.println(graph.adj(1));
+        System.out.println(graph.connectedWith(1));
     }
 }
